@@ -1,0 +1,238 @@
+/* ============================================================
+   CafeBoost AI — Custom CSS
+   ============================================================ */
+
+/* ---- Noise overlay ---- */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+/* ---- Typography ---- */
+.font-700 { font-weight: 700; }
+.font-600 { font-weight: 600; }
+.font-800 { font-weight: 800; }
+
+/* ---- Gradient text ---- */
+.text-gradient {
+  background: linear-gradient(135deg, #F97316 0%, #FB923C 50%, #FDBA74 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Input glow ---- */
+.input-glow-wrapper {
+  background: linear-gradient(135deg, #F97316 0%, #1E1E22 40%, #1E1E22 60%, #F97316 100%);
+  transition: all 0.3s ease;
+}
+.input-glow-wrapper:focus-within {
+  background: linear-gradient(135deg, #F97316 0%, #F97316 100%);
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.2);
+}
+
+/* ---- Analyze button ---- */
+.analyze-btn {
+  background: linear-gradient(135deg, #F97316, #EA580C);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
+}
+.analyze-btn:hover {
+  background: linear-gradient(135deg, #FB923C, #F97316);
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+  transform: translateY(-1px);
+}
+.analyze-btn:active {
+  transform: translateY(0);
+}
+.analyze-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---- Feature cards ---- */
+.feature-card {
+  background: #111113;
+  transition: all 0.25s ease;
+}
+.feature-card:hover {
+  border-color: #3A3A40;
+  background: #141416;
+  transform: translateY(-2px);
+}
+
+/* ---- Loader ring ---- */
+.loader-ring {
+  width: 60px;
+  height: 60px;
+  border: 3px solid #1E1E22;
+  border-top-color: #F97316;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Loading steps ---- */
+.loading-step {
+  transition: all 0.3s ease;
+}
+.loading-step.active .step-icon {
+  border-color: #F97316;
+  color: #F97316;
+}
+.loading-step.done .step-icon {
+  background: #F97316;
+  border-color: #F97316;
+  color: white;
+}
+.loading-step.done .step-icon::after {
+  content: '✓';
+}
+.loading-step.active span:last-child,
+.loading-step.done span:last-child {
+  color: #E4E4E7;
+}
+
+/* ---- Score ring ---- */
+.score-ring-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+.score-ring {
+  width: 80px;
+  height: 80px;
+}
+.score-ring .fill {
+  stroke-dasharray: 201; /* 2 * PI * 32 */
+  stroke-dashoffset: 201;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.score-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* ---- Score card ---- */
+.score-card {
+  transition: all 0.3s ease;
+}
+.score-card:hover {
+  border-color: #3A3A40;
+  transform: translateY(-2px);
+}
+
+/* ---- Report cards ---- */
+.report-card {
+  transition: border-color 0.2s ease;
+}
+.report-card:hover {
+  border-color: #3A3A40;
+}
+
+/* ---- List items ---- */
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: #A1A1AA;
+  line-height: 1.5;
+}
+.result-item .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+/* ---- Improvement cards ---- */
+.improvement-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: #111113;
+  border: 1px solid #1E1E22;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+.improvement-item:hover {
+  border-color: #3A3A40;
+  background: #141416;
+}
+.priority-badge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.priority-High { background: rgba(249, 115, 22, 0.15); color: #FB923C; }
+.priority-Medium { background: rgba(251, 191, 36, 0.15); color: #FCD34D; }
+.priority-Low { background: rgba(113, 113, 122, 0.15); color: #A1A1AA; }
+
+/* ---- Priority list items ---- */
+.priority-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+  color: #E4E4E7;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(249, 115, 22, 0.1);
+}
+.priority-item:last-child {
+  border-bottom: none;
+}
+.priority-num {
+  width: 22px;
+  height: 22px;
+  background: rgba(249, 115, 22, 0.15);
+  color: #F97316;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---- Reveal animation ---- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fadeUp 0.5s ease forwards;
+}
+.fade-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.fade-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.fade-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.fade-up-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  .score-ring-container {
+    width: 64px;
+    height: 64px;
+  }
+  .score-ring {
+    width: 64px;
+    height: 64px;
+  }
+}

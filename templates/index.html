@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CafeBoost AI — Website Analyzer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#F97316',
+              'orange-light': '#FB923C',
+              'orange-dim': '#431407',
+              dark: '#0A0A0B',
+              card: '#111113',
+              border: '#1E1E22',
+              muted: '#3A3A40',
+              text: '#E4E4E7',
+              subtle: '#71717A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-brand-dark text-brand-text font-body antialiased overflow-x-hidden">
+
+  <!-- Background grain + glow -->
+  <div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full opacity-10 blur-[120px]" style="background: radial-gradient(ellipse, #F97316 0%, transparent 70%);"></div>
+    <div class="noise-overlay"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="relative z-10 flex items-center justify-between px-6 md:px-12 py-5 border-b border-brand-border/60">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #F97316, #EA580C);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+      </div>
+      <span class="font-display font-700 text-lg tracking-tight text-white">CafeBoost <span class="text-brand-orange">AI</span></span>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-brand-subtle">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
+      Powered by Gemini
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative z-10 pt-20 pb-16 px-6 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/10 text-brand-orange text-xs font-medium mb-8 tracking-wide uppercase">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+      AI-Powered Analysis
+    </div>
+
+    <h1 class="font-display font-800 text-4xl md:text-6xl lg:text-7xl text-white leading-[1.05] tracking-tight max-w-4xl mx-auto mb-6">
+      Analyze Your Cafe<br/>
+      <span class="text-gradient">Website in Seconds</span>
+    </h1>
+
+    <p class="text-brand-subtle text-lg md:text-xl max-w-xl mx-auto mb-12 leading-relaxed">
+      Get professional SEO, UX, and business growth recommendations powered by AI. Free instant audit.
+    </p>
+
+    <!-- URL INPUT FORM -->
+    <div class="max-w-2xl mx-auto">
+      <div class="input-glow-wrapper rounded-2xl p-px">
+        <div class="bg-brand-card rounded-2xl p-2 flex gap-2 items-center">
+          <div class="flex-1 flex items-center gap-3 px-4">
+            <svg class="text-brand-subtle flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input
+              id="urlInput"
+              type="url"
+              placeholder="https://yourcafe.com"
+              class="flex-1 bg-transparent text-white placeholder:text-brand-muted text-base outline-none py-3 min-w-0 font-body"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+          <button
+            id="analyzeBtn"
+            onclick="startAnalysis()"
+            class="analyze-btn flex-shrink-0 px-6 py-3 rounded-xl font-display font-600 text-sm text-white tracking-wide transition-all duration-200"
+          >
+            Analyze Site
+            <svg class="inline ml-1.5 -mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="text-brand-muted text-xs mt-3">Enter any cafe website URL — analysis takes 15–30 seconds</p>
+    </div>
+  </section>
+
+  <!-- FEATURE CARDS -->
+  <section id="features" class="relative z-10 px-6 py-12 max-w-6xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="feature-card rounded-xl p-5 border border-brand-border">
+        <div class="w-9 h-9 rounded-lg bg-brand-orange/15 flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3 class="font-display font-600 text-sm text-white mb-1.5">Website Analysis</h3>
+        <p class="text-brand-subtle text-xs leading-relaxed">Deep audit of structure, content, and technical quality</p>
+      </div>
+      <div class="feature-card rounded-xl p-5 border border-brand-border">
+        <div class="w-9 h-9 rounded-lg bg-blue-500/15 flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <h3 class="font-display font-600 text-sm text-white mb-1.5">SEO Optimization</h3>
+        <p class="text-brand-subtle text-xs leading-relaxed">Score and fix search engine visibility issues</p>
+      </div>
+      <div class="feature-card rounded-xl p-5 border border-brand-border">
+        <div class="w-9 h-9 rounded-lg bg-emerald-500/15 flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h3 class="font-display font-600 text-sm text-white mb-1.5">Business Growth</h3>
+        <p class="text-brand-subtle text-xs leading-relaxed">Revenue-focused recommendations for cafe owners</p>
+      </div>
+      <div class="feature-card rounded-xl p-5 border border-brand-border">
+        <div class="w-9 h-9 rounded-lg bg-purple-500/15 flex items-center justify-center mb-4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3 class="font-display font-600 text-sm text-white mb-1.5">AI Recommendations</h3>
+        <p class="text-brand-subtle text-xs leading-relaxed">Actionable, priority-ordered fixes powered by Gemini</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOADING STATE -->
+  <section id="loadingSection" class="relative z-10 hidden px-6 py-16 text-center">
+    <div class="max-w-md mx-auto">
+      <div class="loader-ring mx-auto mb-8"></div>
+      <h2 class="font-display font-700 text-2xl text-white mb-2">Analyzing your website…</h2>
+      <p id="loadingMsg" class="text-brand-subtle text-sm">Scraping website content</p>
+      <div class="mt-8 space-y-2 text-left max-w-xs mx-auto">
+        <div class="loading-step flex items-center gap-3 text-sm" id="step1">
+          <span class="step-icon w-5 h-5 rounded-full border border-brand-border flex items-center justify-center text-xs flex-shrink-0">1</span>
+          <span class="text-brand-subtle">Scraping website via Wire</span>
+        </div>
+        <div class="loading-step flex items-center gap-3 text-sm" id="step2">
+          <span class="step-icon w-5 h-5 rounded-full border border-brand-border flex items-center justify-center text-xs flex-shrink-0">2</span>
+          <span class="text-brand-subtle">Extracting content</span>
+        </div>
+        <div class="loading-step flex items-center gap-3 text-sm" id="step3">
+          <span class="step-icon w-5 h-5 rounded-full border border-brand-border flex items-center justify-center text-xs flex-shrink-0">3</span>
+          <span class="text-brand-subtle">Running Gemini AI analysis</span>
+        </div>
+        <div class="loading-step flex items-center gap-3 text-sm" id="step4">
+          <span class="step-icon w-5 h-5 rounded-full border border-brand-border flex items-center justify-center text-xs flex-shrink-0">4</span>
+          <span class="text-brand-subtle">Generating report</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS SECTION -->
+  <section id="resultsSection" class="relative z-10 hidden px-6 py-12 max-w-6xl mx-auto">
+
+    <!-- Analyzed URL banner -->
+    <div class="flex items-center justify-between gap-6 mb-8 p-4 rounded-xl bg-brand-card border border-brand-border">
+      
+
+    <!-- LEFT -->
+  <div class="flex items-center gap-3 min-w-0">
+
+        <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+
+        <span class="text-brand-subtle text-sm whitespace-nowrap">
+            Analysis complete for
+        </span>
+
+        <span id="analyzedUrl"
+      class="text-white text-sm font-medium truncate max-w-[500px]">
+        </span>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex items-center gap-3 ml-auto">
+
+        <button
+            onclick="window.open('/download-html', '_blank')"
+            class="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium">
+            Download HTML
+        </button>
+
+        <button
+            onclick="window.open('/download-pdf','_blank')"
+            class="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium">
+            Download PDF
+        </button>
+
+        <button
+            onclick="resetAnalysis()"
+            class="text-brand-subtle hover:text-white text-xs transition-colors flex items-center gap-1.5">
+
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+            </svg>
+
+            Analyze another
+        </button>
+
+    </div>
+
+</div>
+        
+
+ 
+
+    <!-- SCORE CARDS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="scoreCards">
+      <div class="score-card rounded-2xl p-6 border border-brand-border bg-brand-card text-center">
+        <div class="score-ring-container mb-3">
+          <svg class="score-ring" viewBox="0 0 80 80">
+            <circle class="track" cx="40" cy="40" r="32" fill="none" stroke="#1E1E22" stroke-width="6"/>
+            <circle class="fill" id="overallRing" cx="40" cy="40" r="32" fill="none" stroke="#F97316" stroke-width="6" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          </svg>
+          <span id="overallScore" class="score-value font-display font-800 text-white">—</span>
+        </div>
+        <div class="text-xs text-brand-subtle font-medium uppercase tracking-widest">Overall</div>
+      </div>
+      <div class="score-card rounded-2xl p-6 border border-brand-border bg-brand-card text-center">
+        <div class="score-ring-container mb-3">
+          <svg class="score-ring" viewBox="0 0 80 80">
+            <circle class="track" cx="40" cy="40" r="32" fill="none" stroke="#1E1E22" stroke-width="6"/>
+            <circle class="fill" id="seoRing" cx="40" cy="40" r="32" fill="none" stroke="#60A5FA" stroke-width="6" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          </svg>
+          <span id="seoScore" class="score-value font-display font-800 text-white">—</span>
+        </div>
+        <div class="text-xs text-brand-subtle font-medium uppercase tracking-widest">SEO</div>
+      </div>
+      <div class="score-card rounded-2xl p-6 border border-brand-border bg-brand-card text-center">
+        <div class="score-ring-container mb-3">
+          <svg class="score-ring" viewBox="0 0 80 80">
+            <circle class="track" cx="40" cy="40" r="32" fill="none" stroke="#1E1E22" stroke-width="6"/>
+            <circle class="fill" id="uxRing" cx="40" cy="40" r="32" fill="none" stroke="#34D399" stroke-width="6" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          </svg>
+          <span id="uxScore" class="score-value font-display font-800 text-white">—</span>
+        </div>
+        <div class="text-xs text-brand-subtle font-medium uppercase tracking-widest">UX</div>
+      </div>
+      <div class="score-card rounded-2xl p-6 border border-brand-border bg-brand-card text-center">
+        <div class="score-ring-container mb-3">
+          <svg class="score-ring" viewBox="0 0 80 80">
+            <circle class="track" cx="40" cy="40" r="32" fill="none" stroke="#1E1E22" stroke-width="6"/>
+            <circle class="fill" id="businessRing" cx="40" cy="40" r="32" fill="none" stroke="#A78BFA" stroke-width="6" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+          </svg>
+          <span id="businessScore" class="score-value font-display font-800 text-white">—</span>
+        </div>
+        <div class="text-xs text-brand-subtle font-medium uppercase tracking-widest">Business</div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="mb-6 p-6 rounded-2xl bg-brand-card border border-brand-border">
+      <div class="flex items-center gap-2 mb-3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <h3 class="font-display font-600 text-sm text-white uppercase tracking-wider">Executive Summary</h3>
+      </div>
+      <p id="summaryText" class="text-brand-text text-sm leading-relaxed"></p>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+
+      <!-- PROBLEMS -->
+      <div class="report-card rounded-2xl p-6 bg-brand-card border border-brand-border">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-6 h-6 rounded-lg bg-red-500/15 flex items-center justify-center flex-shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3 class="font-display font-600 text-sm text-white uppercase tracking-wider">Problems Found</h3>
+          <span id="problemCount" class="ml-auto text-xs bg-red-500/15 text-red-400 px-2 py-0.5 rounded-full font-medium"></span>
+        </div>
+        <ul id="problemsList" class="space-y-2.5"></ul>
+      </div>
+
+      <!-- MISSING FEATURES -->
+      <div class="report-card rounded-2xl p-6 bg-brand-card border border-brand-border">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-6 h-6 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3 class="font-display font-600 text-sm text-white uppercase tracking-wider">Missing Features</h3>
+        </div>
+        <ul id="missingList" class="space-y-2.5"></ul>
+      </div>
+
+      <!-- STRENGTHS -->
+      <div class="report-card rounded-2xl p-6 bg-brand-card border border-brand-border">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-6 h-6 rounded-lg bg-emerald-500/15 flex items-center justify-center flex-shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 class="font-display font-600 text-sm text-white uppercase tracking-wider">Strengths</h3>
+        </div>
+        <ul id="strengthsList" class="space-y-2.5"></ul>
+      </div>
+
+      <!-- MARKETING SUGGESTIONS -->
+      <div class="report-card rounded-2xl p-6 bg-brand-card border border-brand-border">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-6 h-6 rounded-lg bg-purple-500/15 flex items-center justify-center flex-shrink-0">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 class="font-display font-600 text-sm text-white uppercase tracking-wider">Marketing Ideas</h3>
+        </div>
+        <ul id="marketingList" class="space-y-2.5"></ul>
+      </div>
+    </div>
+
+    <!-- PRIORITY FIXES -->
+    <div class="mb-6 p-6 rounded-2xl bg-gradient-to-br from-brand-orange/10 to-transparent border border-brand-orange/20">
+      <div class="flex items-center gap-2 mb-4">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <h3 class="font-display font-600 text-sm text-white uppercase tracking-wider">Priority Fixes</h3>
+        <span class="text-brand-orange text-xs ml-auto">Do these first →</span>
+      </div>
+      <ul id="priorityList" class="space-y-2"></ul>
+    </div>
+
+    <!-- ACTIONABLE IMPROVEMENTS -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3 class="font-display font-600 text-white uppercase tracking-wider text-sm">Actionable Improvements</h3>
+      </div>
+      <div id="improvementsList" class="space-y-3"></div>
+    </div>
+
+  </section>
+
+  <!-- ERROR STATE -->
+  <div id="errorBanner" class="hidden relative z-10 max-w-2xl mx-auto px-6 mt-4">
+    <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-3">
+      <svg class="flex-shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      <div>
+        <p class="text-red-400 text-sm font-medium">Analysis Failed</p>
+        <p id="errorMsg" class="text-red-400/70 text-xs mt-0.5"></p>
+      </div>
+      <button onclick="document.getElementById('errorBanner').classList.add('hidden')" class="ml-auto text-red-400/50 hover:text-red-400 transition-colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 mt-24 border-t border-brand-border/60 px-6 py-8 text-center">
+    <p class="text-brand-muted text-xs">CafeBoost AI · Built with Anakin Wire + Google Gemini · <span class="text-brand-orange">Rohin's Project</span></p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
