@@ -2,13 +2,10 @@ import os
 import time
 import requests
 
-WIRE_API_KEY = "ask_caae98a80d36460d051413e3ea943cb1da98b097c9cc3a7bfa00550572099c48"
+WIRE_API_KEY = os.getenv("ask_caae98a80d36460d051413e3ea943cb1da98b097c9cc3a7bfa00550572099c48")
 WIRE_BASE_URL = "https://api.anakin.io/v1/url-scraper"  # Adjust if endpoint differs
 
-import requests
-import time
 
-WIRE_API_KEY = "ask_caae98a80d36460d051413e3ea943cb1da98b097c9cc3a7bfa00550572099c48"
 
 def scrape_website(url):
 
